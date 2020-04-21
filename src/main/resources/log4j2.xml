@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration status="WARN">
+
+    <Properties>
+        <Property name="log_dir">D:\Work\Java\projects\job4j_io\log\</Property>
+        <Property name="layout">%d [%t] %-5p %c - %m%n</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="File"
+                     fileName="${log_dir}\job4j_io.log"
+                     filePattern="${log_dir}\job4j_io.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${layout}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="1 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${layout}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="ru.job4j.gsmirnov" level="info" additivity="false">
+            <AppenderRef ref="File"/>
+        </Logger>
+
+        <Logger name="ru.job4j.gsmirnov" level="info" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="all">
+            <!--<AppenderRef ref="Console"/>-->
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
