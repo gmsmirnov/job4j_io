@@ -1,8 +1,6 @@
 package ru.gsmirnov;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -50,12 +48,26 @@ public class LogFilter {
     }
 
     /**
-     * Entry point. Demonstrates the work of log file filter. Shows result on screen.
+     * Saves the list of strings into the specified file.
+     *
+     * @param logName the specified output file name.
+     * @param lines the specified list of strings.
+     */
+    public static void save(String logName, List<String> lines) {
+        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(logName)))) {
+            lines.forEach(out::println);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Entry point. Demonstrates the work of log file filter. Saves the result into the file.
      *
      * @param args input args.
      */
     public static void main(String[] args) {
-        LogFilter.fileFilter("log.txt", LogFilter.filter("404"))
-                .forEach(System.out::println);
+        List<String> filtered = LogFilter.fileFilter("log.txt", LogFilter.filter("404"));
+        LogFilter.save("filtered_log.txt", filtered);
     }
 }
