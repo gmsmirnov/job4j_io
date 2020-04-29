@@ -27,9 +27,10 @@ public class Dir {
         if (!file.isDirectory()) {
             throw new IllegalStateException(String.format("Not directory: %s", file.getAbsolutePath()));
         }
-        System.out.println(String.format("Size: %s", file.getTotalSpace()));
         for (File subfile : Objects.requireNonNull(file.listFiles())) {
-            System.out.println(String.format("Name: %s, size: %fkb", subfile.getName(), (double) subfile.length() / 1024));
+            if (!subfile.isDirectory()) {
+                System.out.println(String.format("File name: %s, size: %f kb", subfile.getName(), (double) subfile.length() / 1024));
+            }
         }
     }
 }
