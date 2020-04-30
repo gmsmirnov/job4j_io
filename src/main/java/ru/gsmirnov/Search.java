@@ -27,9 +27,12 @@ public class Search {
      * @throws IOException if IO problems were found.
      */
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get(".");
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Root folder or file extension is not specified. Usage: java -jar search.jar ROOT_FOLDER FILE_EXTENSION");
+        }
+        Path start = Paths.get(args[0]);
 //        Files.walkFileTree(start, new PrintFiles());
-        Search.search(start, ".java").forEach(System.out::println);
+        Search.search(start, args[1]).forEach(System.out::println);
     }
 
     /**
