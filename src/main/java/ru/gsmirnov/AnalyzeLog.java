@@ -14,11 +14,6 @@ import java.util.stream.Collectors;
  */
 public class AnalyzeLog {
     /**
-     * If true - server is available, false either.
-     */
-    private boolean state = true;
-
-    /**
      * Wraps all logic. Gets source server log file and writes servers' unavailable time intervals.
      *
      * @param source source log file.
@@ -60,18 +55,19 @@ public class AnalyzeLog {
      * @return the list of strings with server unavailable time intervals.
      */
     public List<String> analyze(List<String> lines) {
+        boolean state = true; // true - server is available, false either.
         List<String> result = new ArrayList<String>();
-        String available = "^[2-3]\\d{2}$"; // 200, 201, 202, 300...
-        String unavailable = "^[4-5]\\d{2}$"; // 403, 404, 500...
+        List<String> available = List.of("200", "300");
+        List<String> unavailable = List.of("400", "500");
         String start = "";
         String end = "";
         for (String line : lines) {
             String[] split = line.split(" ");
-            if (Pattern.matches(unavailable, split[0]) && this.state) {
-                this.state = false;
+            if (unavailable.contains(split[0]) && state) {
+                state = false;
                 start = split[1];
-            } else if (Pattern.matches(available, split[0]) && !this.state) {
-                this.state = true;
+            } else if (available.contains(split[0]) && !state) {
+                state = true;
                 end = split[1];
                 result.add(String.format("%s;%s", start, end));
             }
