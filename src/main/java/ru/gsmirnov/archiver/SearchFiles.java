@@ -1,4 +1,4 @@
-package ru.gsmirnov;
+package ru.gsmirnov.archiver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +16,7 @@ import java.util.function.Predicate;
  * Simple file visitor which applies the specified predicate to each visited file.
  *
  * @author Gregory Smirnov (gsmirnov <artress@ngs.ru>)
- * @version 0.1
+ * @version 0.2
  * @since 2020-04-29
  */
 public class SearchFiles extends SimpleFileVisitor<Path> {
@@ -42,7 +42,7 @@ public class SearchFiles extends SimpleFileVisitor<Path> {
     }
 
     /**
-     * Applies when visit file.
+     * Applies when visits file.
      *
      * @param file next file to visit.
      * @param attrs specific attributes (not used).
